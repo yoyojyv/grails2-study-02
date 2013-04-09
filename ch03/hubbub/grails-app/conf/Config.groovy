@@ -11,7 +11,7 @@
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
 
-grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
+grails.project.groupId = 'com.grailsinaction' // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
 grails.mime.use.accept.header = false
 grails.mime.types = [
@@ -77,6 +77,10 @@ log4j = {
     //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
     //}
 
+    appenders {
+        console     name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+    }
+
     error  'org.codehaus.groovy.grails.web.servlet',        // controllers
            'org.codehaus.groovy.grails.web.pages',          // GSP
            'org.codehaus.groovy.grails.web.sitemesh',       // layouts
@@ -88,4 +92,41 @@ log4j = {
            'org.springframework',
            'org.hibernate',
            'net.sf.ehcache.hibernate'
+
+    environments {
+        development {
+
+            // configure the root logger to output to stdout and appLog appenders.
+            root {
+                info 'stdout'
+                additivity = true
+            }
+
+            debug 'grails.app.filters'
+            debug 'grails.app.services'
+            debug 'grails.app.controllers'
+
+            debug "org.hibernate.SQL"
+            trace "org.hibernate.type.descriptor.sql.BasicBinder"
+        }
+
+
+        test {
+
+        }
+
+        production {
+
+//            // configure the root logger to output to stdout and appLog appenders.
+//            root {
+//                info 'stdout', 'appLog'
+//                additivity = true
+//            }
+//
+//            error 'grails.app.services'
+//            error 'grails.app.controllers'
+
+        }
+
+    }
 }
