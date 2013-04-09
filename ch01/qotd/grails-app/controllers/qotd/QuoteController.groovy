@@ -2,6 +2,10 @@ package qotd
 
 class QuoteController {
 
+    static scaffold = true
+
+    def quoteService
+
     def index() {
         redirect(action: "home")
     }
@@ -11,9 +15,16 @@ class QuoteController {
     }
 
     def random() {
-        def staticAuthor = "Anonymous"
-        def staticContent = "Real Programmers don't eat much quiche"
-        [ author: staticAuthor, content: staticContent]
+        def randomQuote = quoteService.getRandomQuote()
+        [quote : randomQuote]
+    }
+
+    def ajaxRandom() {
+        def randomQuote = quoteService.getRandomQuote()
+        render {
+            q(randomQuote.content)
+            p(randomQuote.author)
+        }
     }
 
 }
